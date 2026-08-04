@@ -6,7 +6,6 @@
   "compatibility_flags": [
     "nodejs_compat"
   ],
-  "migrations_dir": "packages/db/migrations",
   "assets": {
     "directory": "./apps/web/dist",
     "binding": "ASSETS",

@@ -1,8 +1,19 @@
 import { env } from 'cloudflare:workers';
-import { describe, it, expect } from 'vitest';
+import { describe, it, expect, beforeAll } from 'vitest';
 import app from '../src/index';
 
 describe('Gateway HTTP Routes', () => {
+  beforeAll(async () => {
+    await env.DB.batch([
+      env.DB.prepare(`CREATE TABLE IF NOT EXISTS users (
+        id text PRIMARY KEY NOT NULL,
+        email text NOT NULL UNIQUE,
+        name text,
+        created_at text NOT NULL
+      )`)
+    ]);
+  });
+
   it('GET /health returns 200 OK status', async () => {
     const response = await app.request('/health', {}, env);
     expect(response.status).toBe(200);
