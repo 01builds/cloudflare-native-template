@@ -1,0 +1,8 @@
+{
+  "name": "@template/docs",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "echo 'No docs development server configured. Add Astro/Starlight here.'"
+  }
+}

@@ -1,0 +1,27 @@
+{
+  "name": "@template/root",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "turbo run dev",
+    "build": "turbo run build",
+    "typecheck": "turbo run typecheck",
+    "lint": "turbo run lint",
+    "test": "turbo run test",
+    "deploy": "pnpm --filter @template/gateway deploy",
+    "db:generate": "pnpm --filter @template/db generate",
+    "db:migrate:local": "pnpm --filter @template/gateway exec wrangler d1 migrations apply DB --local",
+    "db:migrate:prod": "pnpm --filter @template/gateway exec wrangler d1 migrations apply DB --remote",
+    "seed": "pnpm --filter @template/db seed"
+  },
+  "devDependencies": {
+    "@cloudflare/workers-types": "^4.20240806.0",
+    "turbo": "^2.0.12",
+    "typescript": "^5.5.4",
+    "wrangler": "^3.68.0"
+  },
+  "engines": {
+    "node": ">=20.0.0"
+  },
+  "packageManager": "pnpm@9.7.0"
+}

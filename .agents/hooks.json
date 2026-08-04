@@ -1,0 +1,14 @@
+{
+  "hooks": {
+    "pre-commit": [
+      {
+        "name": "Verify Types & Linting",
+        "command": "pnpm typecheck && pnpm lint"
+      },
+      {
+        "name": "Run Verification Test Suite",
+        "command": "pnpm test"
+      }
+    ]
+  }
+}

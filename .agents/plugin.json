@@ -1,0 +1,12 @@
+{
+  "name": "cloudflare-native-agent-plugin",
+  "version": "1.0.0",
+  "description": "Custom developer agent instructions and hooks for Cloudflare edge development.",
+  "skills": [
+    "worker",
+    "database",
+    "domain",
+    "verification",
+    "tpm"
+  ]
+}
