@@ -3,7 +3,8 @@
   "compilerOptions": {
     "module": "ESNext",
     "moduleResolution": "Bundler",
-    "jsx": "react-jsx"
+    "jsx": "react-jsx",
+    "types": ["@cloudflare/workers-types"]
   },
-  "include": ["src/**/*"]
+  "include": ["src/**/*", "../../packages/gateway/src/env.d.ts", "../../worker-configuration.d.ts"]
 }

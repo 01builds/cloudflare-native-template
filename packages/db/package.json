@@ -2,6 +2,7 @@
   "name": "@template/db",
   "version": "1.0.0",
   "private": true,
+  "type": "module",
   "main": "./src/index.ts",
   "types": "./src/index.ts",
   "scripts": {
@@ -13,6 +14,7 @@
     "drizzle-orm": "^0.45.2"
   },
   "devDependencies": {
+    "@cloudflare/workers-types": "^5.20260804.1",
     "drizzle-kit": "^0.31.10",
     "tsx": "^4.19.0",
     "typescript": "^7.0.2"
