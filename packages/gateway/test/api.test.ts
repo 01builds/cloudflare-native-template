@@ -2,10 +2,12 @@ import { env } from 'cloudflare:workers';
 import { describe, it, expect, beforeAll } from 'vitest';
 import app from '../src/index';
 
+const testEnv = env as unknown as EnvBindings;
+
 describe('Gateway HTTP Routes', () => {
   beforeAll(async () => {
-    await env.DB.batch([
-      env.DB.prepare(`CREATE TABLE IF NOT EXISTS users (
+    await testEnv.DB.batch([
+      testEnv.DB.prepare(`CREATE TABLE IF NOT EXISTS users (
         id text PRIMARY KEY NOT NULL,
         email text NOT NULL UNIQUE,
         name text,
@@ -15,14 +17,14 @@ describe('Gateway HTTP Routes', () => {
   });
 
   it('GET /health returns 200 OK status', async () => {
-    const response = await app.request('/health', {}, env);
+    const response = await app.request('/health', {}, testEnv);
     expect(response.status).toBe(200);
     const json = await response.json<{ status: string }>();
     expect(json.status).toBe('ok');
   });
 
   it('GET /api/users returns empty array initially', async () => {
-    const response = await app.request('/api/users', {}, env);
+    const response = await app.request('/api/users', {}, testEnv);
     expect(response.status).toBe(200);
     const json = await response.json<{ data: unknown[] }>();
     expect(json.data).toEqual([]);
@@ -36,7 +38,7 @@ describe('Gateway HTTP Routes', () => {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email: 'test@example.com', name: 'John Doe' })
       },
-      env
+      testEnv
     );
     expect(response.status).toBe(201);
     const json = await response.json<{ data: { email: string; name: string } }>();
