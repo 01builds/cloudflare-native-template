@@ -1,65 +1,113 @@
-# Cloudflare Native Template
+# 🏛️ Cloudflare Native Starter Template
 
-A production-ready, globally distributed fullstack monorepo starter designed for the Cloudflare edge native ecosystem.
+A production-grade, globally distributed full-stack monorepo template built for the **Cloudflare edge-native ecosystem**. 
 
-## Features
+Designed for **Type-Safe Gateway Routing (Hono.js)**, **Native Web Asset Hosting (Workers Assets)**, **Relational Persistence (D1 + Drizzle)**, and **Autonomous Developer Agent Governance**.
 
-- **Frontend (`apps/web`)**: React 19 + Vite SPA served via Cloudflare Workers Assets.
-- **API Router (`packages/gateway`)**: Hono.js inside Workers with zero-cold-start routing and dynamic middleware.
-- **Relational Persistence (`packages/db`)**: Cloudflare D1 Serverless SQLite integrated with Drizzle ORM.
-- **Type Transport**: End-to-end type safety between backend and frontend via Hono RPC `hc<AppType>()`.
-- **Global Storage**: Object Store (`Storage`) on Cloudflare R2 and Key-Value Cache (`Cache`) on Cloudflare KV.
-- **Edge Inference**: Workers AI models (embeddings, text generation) and Vectorize index integration.
-- **Verification (`packages/gateway/test`)**: Testing directly inside the `workerd` runtime with `@cloudflare/vitest-pool-workers`.
-- **Policy Control (`AGENTS.md`)**: Embedded AI agent constraints to enforce edge runtime patterns.
+---
 
-## Getting Started
+## ⚡ Technical Stack & Version Specifications
 
-### Prerequisites
+| Component | Technology | Version | Description |
+| :--- | :--- | :---: | :--- |
+| **Engine** | Node.js | `v24` (LTS) | Stable enterprise JS runtime environment. |
+| **Monorepo** | pnpm Workspaces | `v9` | Fast, disk-efficient package management. |
+| **Pipeline** | Turborepo | `v2.10.8` | Monorepo caching task runner. |
+| **User Interface** | React | `v19.2.8` | Client application serving interactive views. |
+| **Bundler** | Vite | `v8.2.0` | Next-generation frontend build tooling. |
+| **Gateway Router** | Hono.js | `v4.13.0` | Lightweight router executing inside Worker environment. |
+| **Persistence ORM** | Drizzle ORM | `v0.45.2` | Type-safe relational mapping layer. |
+| **Database** | Cloudflare D1 | — | Serverless SQLite relational database. |
+| **Verification Pool** | Vitest | `v4.1.10` | Native runtime test suite execution using `workerd`. |
 
-- Node.js >= 20.0.0
-- pnpm >= 9.0.0
-- Cloudflare Account & Wrangler CLI (`pnpm add -g wrangler`)
+---
 
-### Installation & Onboarding
+## 📂 Repository Topology
 
-1. Clone the repository and initialize workspace dependencies:
-   ```bash
-   pnpm install
-   ```
+- **`apps/web`**: Client interface. Built to static files and served natively via Cloudflare Workers Assets.
+- **`packages/gateway`**: Worker API router. Entrypoint Hono application handling endpoints under `/api/*` and security policies.
+- **`packages/db`**: Persistence package. Declares schema definitions, migrations, and seeder modules.
+- **`packages/domain`**: Business logic. Declares entities, models, and shared validation contracts.
+- **`AGENTS.md`**: Central repository operating policy directing autonomous coding tools.
 
-2. Setup environment credentials:
-   ```bash
-   cp .dev.vars.example .dev.vars
-   ```
+---
 
-3. Run local database migrations & generate client bindings:
-   ```bash
-   pnpm db:generate
-   pnpm db:migrate:local
-   ```
+## 🚀 Getting Started
 
-4. Populate local database with seed data:
-   ```bash
-   pnpm seed
-   ```
+### 1. Prerequisites
 
-5. Launch local development server:
-   ```bash
-   pnpm dev
-   ```
+Verify Node.js version matches target constraints:
+```bash
+node --version # Must be >= 24.0.0
+```
 
-## Development Commands
+Ensure Wrangler CLI is installed:
+```bash
+pnpm add -g wrangler
+```
 
-- `pnpm dev`: Launch concurrent client & gateway hot-reloaded environments.
-- `pnpm build`: Compile client assets and backend worker.
-- `pnpm typecheck`: Execute TypeScript type audits across all packages.
-- `pnpm test`: Execute Vitest integration test suite inside native workerd pool.
-- `pnpm db:generate`: Generate SQL migration files from Drizzle schema edits.
-- `pnpm db:migrate:local`: Apply SQL migrations to the local D1 instance.
-- `pnpm db:migrate:prod`: Deploy pending migrations to Cloudflare's production D1 network.
-- `pnpm deploy`: Bundle assets and deploy full stack to the edge.
+### 2. Workspace Initialization
 
-## Architecture Guidelines
+Clone the template and install project-wide dependencies:
+```bash
+pnpm install
+```
 
-Review `AGENTS.md` at the root of the workspace for runtime limitations, folder topology, and code styling guardrails.
+Configure your local secrets layout:
+```bash
+cp .dev.vars.example .dev.vars
+```
+
+### 3. Database Set up & Migrations
+
+Local database migrations are run against Miniflare's local emulator instance:
+
+```bash
+# Generate SQL migration scripts from schemas
+pnpm db:generate
+
+# Apply migrations to the local D1 SQLite database
+pnpm db:migrate:local
+
+# Populate the local database with mock seed data
+pnpm seed
+```
+
+### 4. Running Local Development
+
+Launch concurrent watch servers for the gateway router, local emulator bindings, and client interface:
+```bash
+pnpm dev
+```
+
+Your web application will be accessible at `http://localhost:3000`.
+
+---
+
+## 🛠️ Developer Command Registry
+
+| Command | Action Scope |
+| :--- | :--- |
+| `pnpm dev` | Start local client & gateway dev server. |
+| `pnpm build` | Compile the Client assets and Gateway worker entrypoints. |
+| `pnpm typecheck` | Run type checking audits across the entire workspace. |
+| `pnpm test` | Run isolated Vitest tests inside Cloudflare's native `workerd` runtime. |
+| `pnpm db:generate` | Inspect schemas and write new SQL migration outputs. |
+| `pnpm db:migrate:local` | Deploy migration files to the local SQLite D1 emulator. |
+| `pnpm db:migrate:prod` | Deploy migration files to the production Cloudflare D1 environment. |
+| `pnpm deploy` | Build UI assets and deploy the Gateway to Cloudflare Edge. |
+
+---
+
+## 🛡️ Edge Security & Routing Guardrails
+
+> [!IMPORTANT]
+> **API Routing Scopes**: The Client routes dynamic requests to the Gateway via `/api/*`. Do not define generic root paths inside `packages/gateway` that overlap static assets unless registered inside `run_worker_first` in `wrangler.jsonc`.
+
+> [!WARNING]
+> **Edge Compatibility**: Avoid native Node.js APIs (e.g. `fs`, `net`, `child_process`). Always use standard Web APIs or Cloudflare bindings (`env.DB`, `env.CACHE_KV`).
+
+---
+
+## 🤖 Agent Governance Policy
+Before executing code modifications, AI coding assistants must review the **`AGENTS.md`** file located at the root of the workspace. This file establishes coding guidelines, validation procedures, and quality metrics that must be satisfied.
