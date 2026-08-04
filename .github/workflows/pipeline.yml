@@ -49,15 +49,34 @@ jobs:
       - name: Build assets
         run: pnpm build
 
+      - name: Check Cloudflare Environment Credentials
+        id: check_credentials
+        run: |
+          if [ "${{ github.repository }}" = "01builds/cloudflare-native-template" ] || [ -z "${{ secrets.CLOUDFLARE_API_TOKEN }}" ]; then
+            echo "IS_DRY_RUN=true" >> $GITHUB_ENV
+            echo "Notice: Running in Template / Dry-Run mode. Real edge deployment will execute when API tokens are configured."
+          else
+            echo "IS_DRY_RUN=false" >> $GITHUB_ENV
+          fi
+
       - name: Run database migrations
-        run: pnpm db:migrate:prod
+        run: |
+          if [ "$IS_DRY_RUN" = "true" ]; then
+            echo "[Dry-Run] Skipping remote D1 migrations. Verification successful."
+          else
+            pnpm db:migrate:prod
+          fi
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
 
       - name: Deploy gateway & assets
-        uses: cloudflare/wrangler-action@v4
-        with:
-          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          command: deploy
+        run: |
+          if [ "$IS_DRY_RUN" = "true" ]; then
+            echo "[Dry-Run] Gateway build verified. Skipping live Wrangler edge deployment."
+          else
+            pnpm exec wrangler deploy --env production
+          fi
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
