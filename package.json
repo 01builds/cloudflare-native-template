@@ -15,10 +15,10 @@
     "seed": "pnpm --filter @template/db seed"
   },
   "devDependencies": {
-    "@cloudflare/workers-types": "^4.20240806.0",
-    "turbo": "^2.0.12",
-    "typescript": "^5.5.4",
-    "wrangler": "^3.68.0"
+    "@cloudflare/workers-types": "^5.20260804.1",
+    "turbo": "^2.10.8",
+    "typescript": "^7.0.2",
+    "wrangler": "^4.118.0"
   },
   "engines": {
     "node": ">=20.0.0"
