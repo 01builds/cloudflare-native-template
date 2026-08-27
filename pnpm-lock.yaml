@@ -21,16 +21,50 @@ importers:
         specifier: ^4.118.0
         version: 4.118.0(@cloudflare/workers-types@5.20260804.1)
 
+  apps/api:
+    dependencies:
+      '@hono/zod-validator':
+        specifier: ^0.9.0
+        version: 0.9.0(hono@4.13.0)(zod@3.25.76)
+      '@template/db':
+        specifier: workspace:*
+        version: link:../../packages/db
+      '@template/domain':
+        specifier: workspace:*
+        version: link:../../packages/domain
+      hono:
+        specifier: ^4.13.0
+        version: 4.13.0
+      zod:
+        specifier: ^3.23.8
+        version: 3.25.76
+    devDependencies:
+      '@cloudflare/vitest-pool-workers':
+        specifier: ^0.20.1
+        version: 0.20.1(@cloudflare/workers-types@5.20260804.1)(@vitest/runner@4.1.10)(@vitest/snapshot@4.1.10)(vitest@4.1.10(vite@8.2.0(esbuild@0.28.1)(tsx@4.23.5)))
+      '@cloudflare/workers-types':
+        specifier: ^5.20260804.1
+        version: 5.20260804.1
+      typescript:
+        specifier: ^7.0.2
+        version: 7.0.2
+      vitest:
+        specifier: ^4.1.10
+        version: 4.1.10(vite@8.2.0(esbuild@0.28.1)(tsx@4.23.5))
+      wrangler:
+        specifier: ^4.118.0
+        version: 4.118.0(@cloudflare/workers-types@5.20260804.1)
+
   apps/docs: {}
 
   apps/web:
     dependencies:
+      '@template/api':
+        specifier: workspace:*
+        version: link:../api
       '@template/domain':
         specifier: workspace:*
         version: link:../../packages/domain
-      '@template/gateway':
-        specifier: workspace:*
-        version: link:../../packages/gateway
       hono:
         specifier: ^4.13.0
         version: 4.13.0
@@ -103,40 +137,6 @@ importers:
       typescript:
         specifier: ^7.0.2
         version: 7.0.2
-
-  packages/gateway:
-    dependencies:
-      '@hono/zod-validator':
-        specifier: ^0.9.0
-        version: 0.9.0(hono@4.13.0)(zod@3.25.76)
-      '@template/db':
-        specifier: workspace:*
-        version: link:../db
-      '@template/domain':
-        specifier: workspace:*
-        version: link:../domain
-      hono:
-        specifier: ^4.13.0
-        version: 4.13.0
-      zod:
-        specifier: ^3.23.8
-        version: 3.25.76
-    devDependencies:
-      '@cloudflare/vitest-pool-workers':
-        specifier: ^0.20.1
-        version: 0.20.1(@cloudflare/workers-types@5.20260804.1)(@vitest/runner@4.1.10)(@vitest/snapshot@4.1.10)(vitest@4.1.10(vite@8.2.0(esbuild@0.28.1)(tsx@4.23.5)))
-      '@cloudflare/workers-types':
-        specifier: ^5.20260804.1
-        version: 5.20260804.1
-      typescript:
-        specifier: ^7.0.2
-        version: 7.0.2
-      vitest:
-        specifier: ^4.1.10
-        version: 4.1.10(vite@8.2.0(esbuild@0.28.1)(tsx@4.23.5))
-      wrangler:
-        specifier: ^4.118.0
-        version: 4.118.0(@cloudflare/workers-types@5.20260804.1)
 
 packages:
 

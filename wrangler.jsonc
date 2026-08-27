@@ -1,7 +1,7 @@
 {
   "$schema": "node_modules/wrangler/config-schema.json",
   "name": "app-gateway",
-  "main": "packages/gateway/src/index.ts",
+  "main": "apps/api/src/index.ts",
   "compatibility_date": "2024-08-04",
   "compatibility_flags": [
     "nodejs_compat"

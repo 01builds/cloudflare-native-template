@@ -8,10 +8,10 @@
     "typecheck": "turbo run typecheck",
     "lint": "turbo run lint",
     "test": "turbo run test",
-    "deploy": "pnpm --filter @template/gateway deploy",
+    "deploy": "pnpm --filter @template/api deploy",
     "db:generate": "pnpm --filter @template/db generate",
-    "db:migrate:local": "pnpm --filter @template/gateway exec wrangler d1 migrations apply DB --local",
-    "db:migrate:prod": "pnpm --filter @template/gateway exec wrangler d1 migrations apply DB --remote",
+    "db:migrate:local": "pnpm --filter @template/api exec wrangler d1 migrations apply DB --local",
+    "db:migrate:prod": "pnpm --filter @template/api exec wrangler d1 migrations apply DB --remote",
     "seed": "pnpm --filter @template/db seed"
   },
   "devDependencies": {
