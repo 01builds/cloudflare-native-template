@@ -1,3 +1,4 @@
 # Environment variables for local development
 ENVIRONMENT=development
 JWT_SECRET=local_development_jwt_secret_key_32_chars_minimum
+AUTH_SECRET=dev_auth_secret_minimum_32_characters_long_string

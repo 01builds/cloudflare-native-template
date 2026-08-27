@@ -11,11 +11,12 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@template/api": "workspace:*",
     "@template/domain": "workspace:*",
+    "better-auth": "^1.7.2",
     "hono": "^4.13.0",
     "react": "^19.2.8",
-    "react-dom": "^19.2.8",
-    "@template/api": "workspace:*"
+    "react-dom": "^19.2.8"
   },
   "devDependencies": {
     "@cloudflare/vite-plugin": "^1.50.0",
