@@ -70,7 +70,7 @@ jobs:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
 
-      - name: Deploy gateway & assets
+      - name: Deploy API gateway & assets
         run: |
           if [ "$IS_DRY_RUN" = "true" ]; then
             echo "[Dry-Run] Gateway build verified. Skipping live Wrangler edge deployment."

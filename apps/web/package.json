@@ -12,10 +12,10 @@
   },
   "dependencies": {
     "@template/domain": "workspace:*",
-    "@template/gateway": "workspace:*",
     "hono": "^4.13.0",
     "react": "^19.2.8",
-    "react-dom": "^19.2.8"
+    "react-dom": "^19.2.8",
+    "@template/api": "workspace:*"
   },
   "devDependencies": {
     "@cloudflare/vite-plugin": "^1.50.0",
