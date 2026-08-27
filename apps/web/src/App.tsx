@@ -1,94 +1,34 @@
-import { useEffect, useState } from 'react';
-import { api } from './lib/api';
-import type { User } from '@template/domain';
+import React from 'react';
+import { UsersFeatureView } from './features/users/UsersFeatureView';
+import { StorageFeatureView } from './features/storage/StorageFeatureView';
+import { AiFeatureView } from './features/ai/AiFeatureView';
 
 export default function App() {
-  const [users, setUsers] = useState<User[]>([]);
-  const [email, setEmail] = useState('');
-  const [name, setName] = useState('');
-  const [loading, setLoading] = useState(false);
-  const [message, setMessage] = useState('');
-
-  useEffect(() => {
-    fetchUsers();
-  }, []);
-
-  async function fetchUsers() {
-    try {
-      const res = await api.api.users.$get();
-      if (res.ok) {
-        const json = await res.json();
-        setUsers(json.data);
-      }
-    } catch (err) {
-      console.error('Error fetching users:', err);
-    }
-  }
-
-  async function createUser(e: React.FormEvent) {
-    e.preventDefault();
-    setLoading(true);
-    setMessage('');
-    try {
-      const res = await api.api.users.$post({
-        json: { email, name: name || undefined }
-      });
-      if (res.ok) {
-        setEmail('');
-        setName('');
-        setMessage('User created successfully!');
-        fetchUsers();
-      } else {
-        const errJson = await res.json();
-        setMessage(`Error: ${JSON.stringify(errJson)}`);
-      }
-    } catch (err) {
-      setMessage('Network error creating user');
-      console.error(err);
-    } finally {
-      setLoading(false);
-    }
-  }
-
   return (
-    <div style={{ fontFamily: 'sans-serif', maxWidth: 600, margin: '40px auto', padding: 20 }}>
-      <h1>Cloudflare Native Starter</h1>
-      
-      <form onSubmit={createUser} style={{ display: 'flex', flexDirection: 'column', gap: 10, marginBottom: 30 }}>
-        <h3>Create User</h3>
-        <input 
-          type="email" 
-          placeholder="Email address" 
-          value={email} 
-          onChange={(e) => setEmail(e.target.value)} 
-          required 
-          style={{ padding: 8 }}
-        />
-        <input 
-          type="text" 
-          placeholder="Name (optional)" 
-          value={name} 
-          onChange={(e) => setName(e.target.value)} 
-          style={{ padding: 8 }}
-        />
-        <button type="submit" disabled={loading} style={{ padding: 10, cursor: 'pointer' }}>
-          {loading ? 'Submitting...' : 'Add User'}
-        </button>
-        {message && <p style={{ fontWeight: 'bold' }}>{message}</p>}
-      </form>
+    <div style={{ minHeight: '100vh', backgroundColor: '#f1f5f9', fontFamily: 'system-ui, -apple-system, sans-serif' }}>
+      <header style={{ backgroundColor: '#0f172a', color: '#ffffff', padding: '20px 0', boxShadow: '0 2px 4px rgba(0,0,0,0.1)' }}>
+        <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 24px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+          <div>
+            <h1 style={{ margin: 0, fontSize: '1.5rem', fontWeight: 700, letterSpacing: '-0.025em' }}>
+              Cloudflare Native Starter
+            </h1>
+            <p style={{ margin: '4px 0 0 0', fontSize: '0.875rem', color: '#94a3b8' }}>
+              Symmetric Feature-Driven Architecture Dashboard
+            </p>
+          </div>
+          <span style={{ backgroundColor: '#1e293b', border: '1px solid #334155', borderRadius: '20px', padding: '4px 12px', fontSize: '0.75rem', color: '#38bdf8' }}>
+            Workerd Edge Engine
+          </span>
+        </div>
+      </header>
 
-      <h3>Users List</h3>
-      {users.length === 0 ? (
-        <p>No users found in database.</p>
-      ) : (
-        <ul style={{ paddingLeft: 20 }}>
-          {users.map((user) => (
-            <li key={user.id} style={{ margin: '8px 0' }}>
-              <strong>{user.name || 'Anonymous'}</strong> ({user.email}) - <small>{new Date(user.createdAt).toLocaleString()}</small>
-            </li>
-          ))}
-        </ul>
-      )}
+      <main style={{ maxWidth: '1200px', margin: '32px auto', padding: '0 24px' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(350px, 1fr))', gap: '24px' }}>
+          <UsersFeatureView />
+          <StorageFeatureView />
+          <AiFeatureView />
+        </div>
+      </main>
     </div>
   );
 }
