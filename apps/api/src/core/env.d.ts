@@ -4,6 +4,8 @@ interface EnvBindings {
   STORAGE_R2: R2Bucket;
   AI: Ai;
   ENVIRONMENT: string;
+  AUTH_SECRET: string;
+  APP_URL?: string;
 }
 
 declare module 'cloudflare:workers' {

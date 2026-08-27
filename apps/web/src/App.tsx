@@ -2,6 +2,7 @@ import React from 'react';
 import { UsersFeatureView } from './features/users/UsersFeatureView';
 import { StorageFeatureView } from './features/storage/StorageFeatureView';
 import { AiFeatureView } from './features/ai/AiFeatureView';
+import { AuthFeatureView } from './features/auth/AuthFeatureView';
 
 export default function App() {
   return (
@@ -24,6 +25,7 @@ export default function App() {
 
       <main style={{ maxWidth: '1200px', margin: '32px auto', padding: '0 24px' }}>
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(350px, 1fr))', gap: '24px' }}>
+          <AuthFeatureView />
           <UsersFeatureView />
           <StorageFeatureView />
           <AiFeatureView />
