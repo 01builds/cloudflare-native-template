@@ -1,8 +1,5 @@
-import { z } from 'zod';
+import { CreateUserSchema } from './features/users/user.schema';
+import { CreateUserInput } from './features/users/user.type';
 
-export const CreateUserSchema = z.object({
-  email: z.string().email('Invalid email address format'),
-  name: z.string().min(1, 'Name must contain at least 1 character').nullable().optional()
-});
-
-export type CreateUserInput = z.infer<typeof CreateUserSchema>;
+export { CreateUserSchema };
+export type { CreateUserInput };
